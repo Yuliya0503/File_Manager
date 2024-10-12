@@ -1,13 +1,14 @@
 import Messages from "../constants/messages.js";
+import { showOperationFailed } from "./showOperationFailed.js";
 
 const getUserName = async () => {
   try {
-    const args = await process.argv.slice(2);
-    const usernameArg = await args.find(arg => arg.startsWith(`--${Messages.USERNAME_ARGUMENT}=`));
-    const username = await usernameArg ? usernameArg.split('=')[1] : Messages.DEFAULT_USERNAME;
+    const args = process.argv.slice(2);
+    const usernameArg = args.find(arg => arg.startsWith(`--${Messages.USERNAME_ARGUMENT}=`));
+    const username = usernameArg ? usernameArg.split('=')[1] : Messages.DEFAULT_USERNAME;
     return username;
-  } catch(error) {
-    throw new Error(error);
+  } catch {
+    await showOperationFailed();
   }
 }
 

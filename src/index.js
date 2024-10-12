@@ -5,6 +5,7 @@ import { sayHiToUser } from "./operations/sayHiToUser.js";
 import { sayByeToUser } from "./operations/sayByeToUser.js";
 import { readLineInterface } from "./utils/readlineInterface.js";
 import { showCurrentDirectory } from './utils/showCurrDir.js';
+import { showInvalidInput } from './utils/showInvalidInput.js';
 
 const rl = readline.createInterface( { input: stdin, output: stdout } );
 readLineInterface.readlineInterface = rl;
@@ -19,7 +20,7 @@ const fileManager = async() => {
     if (input.trim() === '.exit') {
       rl.close();
     } else {
-      console.log(`Invalid input: ${input}`);
+      await showInvalidInput();
       rl.prompt();
     }
   });
