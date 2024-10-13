@@ -12,6 +12,8 @@ import { ls } from './operations/ls.js';
 import { cat } from './operations/cat.js';
 import { add } from './operations/add.js';
 import { rn } from './operations/rn.js';
+import { rm } from './operations/rm.js';
+import { hash } from './operations/hash.js';
 
 const rl = readline.createInterface( { input: stdin, output: stdout } );
 readLineInterface.readlineInterface = rl;
@@ -41,6 +43,10 @@ const fileManager = async() => {
       await add({ name: cmdName, arguments: args })
     } else if(cmdName === 'rn'){
       await rn({ name: cmdName, arguments: args })
+    } else if(cmdName === 'rm'){
+      await rm({ name: cmdName, arguments: args })
+    } else if(cmdName === 'hash'){
+      await hash({ name: cmdName, arguments: args })
     } else {
       await showInvalidInput();
     }
