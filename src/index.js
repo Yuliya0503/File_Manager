@@ -8,6 +8,7 @@ import { showCurrentDirectory } from './utils/showCurrDir.js';
 import { showInvalidInput } from './utils/showInvalidInput.js';
 import { cd } from './operations/cd.js';
 import { up } from './operations/up.js';
+import { ls } from './operations/ls.js';
 
 const rl = readline.createInterface( { input: stdin, output: stdout } );
 readLineInterface.readlineInterface = rl;
@@ -29,6 +30,8 @@ const fileManager = async() => {
       await cd({ name: cmdName, arguments: args });
     } else if(cmdName === 'up') {
       await up();
+    } else if(cmdName === 'ls') {
+      await ls();
     } else {
       await showInvalidInput();
     }
