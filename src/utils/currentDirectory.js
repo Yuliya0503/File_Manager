@@ -1,8 +1,10 @@
 import os from 'node:os';
 
+const homedir = os.homedir();
+
 class CurrentDirectory {
   constructor() {
-    this.currentDirectory = os.homedir();
+    this.currentDirectory = homedir;
   }
 
   get currentDir() {
