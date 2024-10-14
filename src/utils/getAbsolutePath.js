@@ -1,6 +1,6 @@
 import { currentDirectory } from "./currentDirectory.js";
 import path from 'node:path';
-import { showOperationFailed } from "./showOperationFailed.js";
+import { showInvalidInput } from './showInvalidInput.js'
 
 
 const getAbsolutePath = async (pth) => {
@@ -13,7 +13,7 @@ const getAbsolutePath = async (pth) => {
       return (path.join(getCurrentDir, pth));
     }
   } catch {
-    await showOperationFailed();
+    await showInvalidInput();
   }
 }
 

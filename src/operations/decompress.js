@@ -18,6 +18,6 @@ export const decompress = async (command) => {
   const stream = readStream.pipe(brotli).pipe(writeStream);
 
   stream.on('finish', () => {
-    console.log('Ok');
+    console.log('File decompressed');
   })
 }

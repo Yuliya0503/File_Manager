@@ -1,6 +1,6 @@
 import { getAbsolutePath } from "./getAbsolutePath.js";
 import { lstat } from "node:fs/promises";
-import { showOperationFailed } from "./showOperationFailed.js";
+import { showInvalidInput } from './showInvalidInput.js'
 
 const checkExistPath = async (path) => {
   try {
@@ -18,7 +18,7 @@ const isFileExist = async (path) => {
     const res = stat.isFile();
     return res;
   } catch {
-    showOperationFailed();
+    showInvalidInput();
   }
 }
 
@@ -28,7 +28,7 @@ const isDirectoryExist = async (path) => {
     const res = stat.isDirectory();
     return res;
   } catch {
-    showOperationFailed();
+    showInvalidInput();
   }
 }
 
