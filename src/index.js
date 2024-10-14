@@ -6,18 +6,9 @@ import { sayByeToUser } from "./operations/sayByeToUser.js";
 import { readLineInterface } from "./utils/readlineInterface.js";
 import { showCurrentDirectory } from './utils/showCurrDir.js';
 import { showInvalidInput } from './utils/showInvalidInput.js';
-import { cd } from './operations/cd.js';
-import { up } from './operations/up.js';
-import { ls } from './operations/ls.js';
-import { cat } from './operations/cat.js';
-import { add } from './operations/add.js';
-import { rn } from './operations/rn.js';
-import { rm } from './operations/rm.js';
-import { hash } from './operations/hash.js';
-import { cp } from './operations/cp.js';
-import { mv } from './operations/mv.js';
-import { compress } from './operations/compress.js';
-import { decompress } from './operations/decompress.js'; 
+import { showOperationFailed } from './utils/showOperationFailed.js';
+import { runCommands } from './controllers/runCommands.js';
+import { isCommandArgsCount } from './controllers/controllerCountArgs.js';
 
 const rl = readline.createInterface( { input: stdin, output: stdout } );
 readLineInterface.readlineInterface = rl;
@@ -29,41 +20,29 @@ const fileManager = async() => {
   rl.prompt(); 
 
   rl.on('line', async (input) => {
-    const command = input.toString().trim().split(' ');
-    const cmdName = command[0];
-    const args = command.slice(1);
-
-    if (cmdName === '.exit') {
-      rl.close();
-    } else if(cmdName === 'cd'){
-      await cd({ name: cmdName, arguments: args });
-    } else if(cmdName === 'up') {
-      await up();
-    } else if(cmdName === 'ls') {
-      await ls();
-    } else if(cmdName === 'cat'){
-      await cat({ name: cmdName, arguments: args })
-    } else if(cmdName === 'add'){
-      await add({ name: cmdName, arguments: args })
-    } else if(cmdName === 'rn'){
-      await rn({ name: cmdName, arguments: args })
-    } else if(cmdName === 'rm'){
-      await rm({ name: cmdName, arguments: args })
-    } else if(cmdName === 'hash'){
-      await hash({ name: cmdName, arguments: args })
-    } else if(cmdName === 'cp'){
-      await cp({ name: cmdName, arguments: args })
-    } else if(cmdName === 'mv'){
-      await mv({ name: cmdName, arguments: args })
-    } else if(cmdName === 'compress'){
-      await compress({ name: cmdName, arguments: args })
-    } else if(cmdName === 'decompress'){
-      await decompress({ name: cmdName, arguments: args })
-    } else {
+    const str = input.toString().trim().split(' ');
+    const command = {
+      name: str[0],
+      arguments: str.slice(1), 
+    };
+    const commandCallError = (await isCommandArgsCount(command));
+    if(!commandCallError) {
       await showInvalidInput();
+    } else {
+      try {
+        await runCommands(command);
+      } catch {
+        await showOperationFailed();
+        rl.prompt();
+      }
     }
+    
     await showCurrentDirectory();
     rl.prompt();
+  });
+
+  rl.on('SIGINT', () => {
+    rl.close();
   });
 
   rl.on('close', async() =>{
