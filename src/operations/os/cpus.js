@@ -14,5 +14,3 @@ export const cpus = async () => {
   process.stdout.write(`Amount of CPUS: \x1b[35m${cpuInfo.length}\x1b[0m\n`);
   console.table(formattedCpuData);
 };
-
-cpus();

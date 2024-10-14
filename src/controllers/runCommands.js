@@ -11,6 +11,7 @@ import { compress } from '../operations/compress.js';
 import { decompress } from '../operations/decompress.js';
 import { cp } from '../operations/cp.js';
 import { mv } from '../operations/mv.js';
+import { os } from '../operations/os/os.js';
 
 import Commands from '../constants/commands.js';
 import { showInvalidInput } from '../utils/showInvalidInput.js';
@@ -23,7 +24,7 @@ const commandMap = {
   [Commands.COMMAND_ADD]: add,
   [Commands.COMMAND_RN]: rn,
   [Commands.COMMAND_RM]: rm,
-  // [Commands.COMMAND_OS]: os,
+  [Commands.COMMAND_OS]: os,
   [Commands.COMMAND_HASH]: hash,
   [Commands.COMMAND_EXIT]: exit,
   [Commands.COMMAND_COMPRESS]: compress,
